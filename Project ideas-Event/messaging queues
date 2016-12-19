@@ -1,0 +1,14 @@
+Ans2) Event/Messaging queues
+Multiple inbound messages into a message queue and queuing system will push them to various DBs, services sync or async depending on the instruction and simulate rollbacks (G1 use case).
+
+Problems
+1) the messages might get deleted before hitting a database.
+Ans) In java we can use “@transaction” annotation (in the DAO layer) that will not commit until and unless the database operation is fulfilled.
+We can check if the transaction is successful we can delete the messages from the queues.
+
+2) There are many messages that the user will be getting. Data can be corrupted
+Ans) We can use operation like multithreading. Synchronization using it we can lock the messages a user can get, until and unless he has read those messages it will not be committed into the database. As he reads it will be unlocked for new messages to appear in his mobile.
+Simple: A Producer consumer multithreading problem
+
+
+
